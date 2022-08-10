@@ -1,0 +1,84 @@
+# ================================================== #
+# pyfindstr
+# https://github.com/shirooo39/pyfindstr
+# ================================================== #
+#
+# pyfindstr is a simple Python script that looks up
+# for a keyword on any files (or specified by the file type)
+# and recursively.
+# 
+# You could also say that this is just a fancy way
+# to look up for a string in a file. ¯\_( ツ )_/¯
+#
+# The same can be achieved on Windows by using this command:
+# findstr /s /i "(keyword)" "(path)"
+#
+# For example: findstr /s /i "cdn" "D:\Projects\GitHub\Shiro39\jekyll-mdui\*.html"
+# This command will look up for the keyword cdn
+# on any .html files in the given path.
+#
+# ================================================== #
+
+import pathlib
+import subprocess
+import sys
+
+
+def clear_screen():
+    try:
+        subprocess.run(['cls'], shell=True, check=True, stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        subprocess.run(['clear'], shell=True, check=True, stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        pass
+
+
+def main():
+    print(
+        f'{"-" * 25} Python Find String {"-" * 25}\n'
+        'https://github.com/shirooo39/pyfindstr\n'
+        f'{"-" * 70}\n'
+    )
+
+    keyword = input(r'Enter keyword: ')
+    if keyword == '':
+        clear_screen()
+        sys.exit('[ALERT]: The operation has been aborted as there is no keyword given.')
+
+    file_path = input(r'Enter search path: ')
+    if file_path == '':
+        clear_screen()
+        sys.exit('[ALERT]: The operation has been aborted as there is no path given.')
+
+    file_type = input(r'Enter file type: ')
+    if file_type == '':
+        file_type = '*'
+
+    print(f'\n{"-" * 70}\n')
+
+    if pathlib.Path(file_path).exists() and pathlib.Path(file_path).is_dir():
+        for files in pathlib.Path(file_path).rglob(f'*.{file_type}'):
+            with open(files, 'r', encoding='utf8') as fout:
+                index = 0
+
+                for lines in fout.readlines():
+                    index += 1
+
+                    if keyword in lines:
+                        print(
+                            f'[+] Found the keyword: {keyword}\n' \
+                            f'    In file: {files}\n' \
+                            f'    In line: {index}\n' \
+                            f'    {lines}' \
+                        )
+
+
+if __name__ == '__main__':
+    clear_screen()
+
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit('[ALERT]: KeyboardInterrupt has been detected! Exiting...')
+    except Exception as general_error:
+        sys.exit(f'[ERROR]: {general_error}')
