@@ -1,7 +1,7 @@
 # pyfindstr
 pyfindstr is just a simple Python script that looks up for a keyword on any files (or specified by the file type) and recursively.  
 
-![image](https://user-images.githubusercontent.com/38461122/183863502-69cf376c-f456-4e7e-adcc-99ab23c5a759.png)
+<img style="width: 65%;" src="https://user-images.githubusercontent.com/38461122/183863502-69cf376c-f456-4e7e-adcc-99ab23c5a759.png" atl="screenshot of pyfindstr"></img>
 
 (You could also say that this is just a fancy way to look up for a string in a file. ¯\_( ツ )_/¯)
 
